@@ -14,9 +14,17 @@ import android.widget.Button;
  */
 
 public class BeatBoxFragment extends Fragment {
+    //mBeatbox used to create BeatBox instance to show log file output (p.333)
+    private BeatBox mBeatBox;
     //static newinstance() method to create the fragment.
     public static BeatBoxFragment newinstance() {
         return new BeatBoxFragment();
+    }
+    //Creating an instance of BeatBox to verify that AssetManager can list the .wav files - p.333
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mBeatBox = new BeatBox(getActivity());
     }
 
     //Inflate the layout for the fragment's view and return the inflated view to the hosting activity.
