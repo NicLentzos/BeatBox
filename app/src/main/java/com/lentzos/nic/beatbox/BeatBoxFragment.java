@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.List;
+
 /**
  * Created by Nic on 08/11/2016.
  */
@@ -21,6 +23,7 @@ public class BeatBoxFragment extends Fragment {
         return new BeatBoxFragment();
     }
     //Creating an instance of BeatBox to verify that AssetManager can list the .wav files - p.333
+    //Files listed in Android Monitor.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,22 +42,34 @@ public class BeatBoxFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_beat_box, container, false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.fragment_beat_box_recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
-        //wire up the SoundAdapter adapter to recyclerView.
-        recyclerView.setAdapter(new SoundAdapter());
+        //wire up the SoundAdapter adapter to recyclerView and pass in the sounds.
+        recyclerView.setAdapter(new SoundAdapter(mBeatBox.getSounds()));
         return  view;
     }
     //now to create the viewholders. They are wired up to list_item_sound.xml.
      private class SoundHolder extends RecyclerView.ViewHolder {
         private Button mButton;
+        private Sound mSound;
 
         public SoundHolder(LayoutInflater inflater, ViewGroup container) {
             super(inflater.inflate(R.layout.list_item_sound, container, false));
 
             mButton = (Button)itemView.findViewById(R.id.list_item_sound_button);
         }
+        //Code to bind SoundHolder to a sound.
+        public void bindSound(Sound sound) {
+            mSound = sound;
+            mButton.setText(mSound.getName());
+        }
     }
     //now create an adapter to hook up to the SoundHolder viewholders.
     private class SoundAdapter extends RecyclerView.Adapter<SoundHolder> {
+        //Wire up SoundAdapter to a list of sounds.
+        private List<Sound> mSounds;
+
+        public SoundAdapter(List<Sound> sounds) {
+            mSounds = sounds;
+        }
         @Override // Overriding a method provided by the Adapter interface.
         public SoundHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -63,12 +78,15 @@ public class BeatBoxFragment extends Fragment {
 
         @Override //implement method
         public void onBindViewHolder (SoundHolder soundHolder, int position) {
-
+            //Wire up SoundAdapter to a list of sounds.
+            Sound sound = mSounds.get(position);
+            soundHolder.bindSound(sound);
         }
 
         @Override  //implement abstract method
         public int getItemCount() {
-            return 0;
+            //Wire up SoundAdapter to a list of sounds.
+            return mSounds.size();
         }
     }
     //now wire up SoundAdapter adapter in the Recyclerview (above).

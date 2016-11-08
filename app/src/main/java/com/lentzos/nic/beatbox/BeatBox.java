@@ -5,6 +5,8 @@ import android.content.res.AssetManager;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nic on 08/11/2016.
@@ -18,6 +20,7 @@ public class BeatBox {
     //You can access assets from the AssetManager class. You can get an AssetManager from any Context.
     //Create a constructor that takes in a Context, pulls out an AssetManager and stores it away.
     private AssetManager mAssets;
+    private List<Sound> mSounds = new ArrayList<>();
 
     public BeatBox(Context context){
         mAssets = context.getAssets();
@@ -36,5 +39,15 @@ public class BeatBox {
             Log.e(TAG, "Could not list assets", ioe);
             return;
         }
+        //After making presentable filenames in the Sound.java constructor, build up a list of sounds
+        //in loadSounds().
+        for (String filename : soundNames) {
+            String assetPath = SOUNDS_FOLDER + "/" + filename;
+            Sound sound = new Sound(assetPath);
+            mSounds.add(sound);
+        }
     }
+        public List<Sound> getSounds() {
+            return mSounds;
+        }
 }
