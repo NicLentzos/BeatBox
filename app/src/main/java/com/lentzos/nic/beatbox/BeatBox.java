@@ -1,6 +1,7 @@
 package com.lentzos.nic.beatbox;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
@@ -59,6 +60,17 @@ public class BeatBox {
                 Log.e(TAG, "Could not load sound " + filename, ioe);
             }
     }}
+
+    //add a play(Sound) method to play back the sounds.
+
+    public void play(Sound sound) {
+        Integer soundId = sound.getSoundId();
+        if (soundId == null) {
+            return;
+        }
+        mSoundPool.play(soundId, 1.0f, 1.0f, 1, 0, 1.0f);
+    }
+
         public List<Sound> getSounds() {
             return mSounds;
         }

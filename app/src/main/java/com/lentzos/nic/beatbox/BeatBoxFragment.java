@@ -47,7 +47,8 @@ public class BeatBoxFragment extends Fragment {
         return  view;
     }
     //now to create the viewholders. They are wired up to list_item_sound.xml.
-     private class SoundHolder extends RecyclerView.ViewHolder {
+    //implement view.onclicklistener to get the buttons to play a sound when pressed.
+     private class SoundHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Button mButton;
         private Sound mSound;
 
@@ -55,11 +56,16 @@ public class BeatBoxFragment extends Fragment {
             super(inflater.inflate(R.layout.list_item_sound, container, false));
 
             mButton = (Button)itemView.findViewById(R.id.list_item_sound_button);
+            mButton.setOnClickListener(this);
         }
         //Code to bind SoundHolder to a sound.
         public void bindSound(Sound sound) {
             mSound = sound;
             mButton.setText(mSound.getName());
+        }
+        @Override
+        public void onClick(View v) {
+            mBeatBox.play(mSound);
         }
     }
     //now create an adapter to hook up to the SoundHolder viewholders.
