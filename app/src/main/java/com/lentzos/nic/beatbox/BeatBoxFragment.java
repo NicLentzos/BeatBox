@@ -29,6 +29,12 @@ public class BeatBoxFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mBeatBox = new BeatBox(getActivity());
     }
+    //Add a method to clean up the soundpool when you have finished with it.
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mBeatBox.release();
+    }
 
     //Inflate the layout for the fragment's view and return the inflated view to the hosting activity.
     //Call LayoutInflater.inflate, passing it the layout resource ID and the view's parent (the ViewGroup above).
