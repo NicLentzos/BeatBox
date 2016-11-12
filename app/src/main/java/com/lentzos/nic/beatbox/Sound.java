@@ -10,6 +10,17 @@ public class Sound {
     private String mAssetPath;
     private String mName;
 
+    public Integer getSoundId() {
+        return mSoundId;
+    }
+
+    public void setSoundId(Integer soundId) {
+        mSoundId = soundId;
+    }
+
+    //integer instead of int - means it can have a null value when no sound plays.
+    private Integer mSoundId;
+
     //Sound constructor
     public Sound(String assetPath) {
         mAssetPath = assetPath;
