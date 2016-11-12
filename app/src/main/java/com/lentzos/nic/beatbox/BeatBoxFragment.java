@@ -27,6 +27,10 @@ public class BeatBoxFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //call retaininstance to keep the fragment alive across rotation changes.
+        //fragment is not destroyed with the activity. It is retained and passed along intact to
+        //the new activity. See p.348.
+        setRetainInstance(true);
         mBeatBox = new BeatBox(getActivity());
     }
     //Add a method to clean up the soundpool when you have finished with it.
